@@ -1,6 +1,6 @@
 # WD121_Claude-Discord-Bridge
 
-Discord botを通じてClaude Codeと双方向通信を実現するシステム
+Discord bot「Cla Dis Bridge」を通じてClaude Codeと双方向通信を実現するシステム
 
 ## 概要
 

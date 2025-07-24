@@ -81,8 +81,10 @@ class ClaudeBridge(commands.Bot):
         logger.info(f'Channel ID: {self.channel_id}')
         
         # バックグラウンドタスク開始
-        self.check_pending.start()
-        self.check_responses.start()
+        if not check_pending.is_running():
+            check_pending.start()
+        if not check_responses.is_running():
+            check_responses.start()
         
         # 起動通知
         if self.channel_id:
@@ -160,7 +162,7 @@ async def status(interaction: discord.Interaction):
     
     await interaction.followup.send(embed=embed)
 
-@bot.tasks.loop(seconds=1)
+@tasks.loop(seconds=1)
 async def check_pending():
     """承認待ちメッセージの確認"""
     try:
@@ -209,7 +211,7 @@ async def check_pending():
     except Exception as e:
         logger.error(f"Error in check_pending: {e}")
 
-@bot.tasks.loop(seconds=1)
+@tasks.loop(seconds=1)
 async def check_responses():
     """レスポンスファイルの確認"""
     try:
